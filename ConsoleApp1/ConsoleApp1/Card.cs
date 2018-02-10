@@ -28,6 +28,7 @@ namespace ConsoleApp1 {
             foreach (ITask task in tasks) {
                 task.Run(state, this);
             }
+            state.GetCurrentEntity().Discard(this);
         }
 
         override
@@ -36,7 +37,7 @@ namespace ConsoleApp1 {
         }
     }
 
-    public class TestCard : Card {
+    public class Attack : Card {
         private static string name = "Attack";
         private static int cost = 1;
         private static Program.Rarity rarity = Program.Rarity.Common;
@@ -44,7 +45,7 @@ namespace ConsoleApp1 {
             new ExampleTask()
         };
 
-        public TestCard() : base(name, cost, rarity, taskList) {
+        public Attack() : base(name, cost, rarity, taskList) {
         }
     }
 }

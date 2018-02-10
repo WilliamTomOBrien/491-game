@@ -12,19 +12,6 @@ namespace ConsoleApp1 {
         }
 
         static void Main(string[] args) {
-            
-            List<Card> enemyCards = new List<Card> {
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard()
-            };
 
             Player p1 = new Wizard();
             Player p2 = new Wizard();
@@ -35,21 +22,20 @@ namespace ConsoleApp1 {
             state.AddEntity(p1);
             state.AddEntity(p2);
             state.AddEntity(enemy1);
+
+            state.BeginFight();
             
-            // Test code (unfinished) -------------------------------
-            int i = 1;
-            foreach (Player player in state.GetPlayers()) {
-                Console.WriteLine("Player " + i + "'s turn.");
-                int cardNum = 1;
-                foreach (Card card in player.GetHand()) {
-                    Console.WriteLine(cardNum + ") " + card);
-                    cardNum++;
-                }
-                i++;
+            while(true) {
+                state.NextTurn();
             }
-            // ------------------------------------------------------
 
             Console.ReadKey();
+        }
+
+        public static void outputList<E>(List<E> list) {
+            foreach (E e in list) {
+                Console.WriteLine(e);
+            }
         }
     }
 }

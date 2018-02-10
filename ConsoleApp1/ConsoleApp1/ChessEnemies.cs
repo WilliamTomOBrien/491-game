@@ -14,17 +14,22 @@ namespace ConsoleApp1 {
 
         private static List<Card> getStartingCards() {
             return new List<Card> {
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard(),
-                new TestCard()
+                new Attack(),
+                new Attack(),
+                new Attack(),
+                new Attack(),
+                new Attack(),
+                new Attack(),
+                new Attack(),
+                new Attack(),
+                new Attack(),
+                new Attack()
             };
+        }
+
+        public override void TurnLogic(GameState state) {
+            Console.WriteLine("The pawn attacks! It's not very effective.");
+            Console.WriteLine();
         }
     }
 }

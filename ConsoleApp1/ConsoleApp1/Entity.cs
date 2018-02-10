@@ -9,6 +9,7 @@ namespace ConsoleApp1 {
         private int hp;
         private int cardsPerTurn;
         private int energyPerTurn;
+        // If this > 10, update the player class regex
         private int handLimit = 10;
 
         private List<Card> allCards;
@@ -18,6 +19,10 @@ namespace ConsoleApp1 {
         private List<Card> trash;
 
         public IEntity(int startingHP, int cardsPerTurn, int energyPerTurn, List<Card> startingCards) {
+            maxHP = startingHP;
+            hp = startingHP;
+            this.cardsPerTurn = cardsPerTurn;
+            this.energyPerTurn = energyPerTurn;
             allCards = new List<Card>(startingCards);
             deck = new List<Card>();
             hand = new List<Card>();
@@ -42,19 +47,23 @@ namespace ConsoleApp1 {
         }
 
         public List<Card> GetAllCards() {
-            return new List<Card>(allCards);
+            return allCards;
         }
+
         public List<Card> GetDeck() {
-            return new List<Card>(deck);
+            return deck;
         }
+
         public List<Card> GetHand() {
-            return new List<Card>(hand);
+            return hand;
         }
+
         public List<Card> GetDiscards() {
-            return new List<Card>(discards);
+            return discards;
         }
+
         public List<Card> GetTrash() {
-            return new List<Card>(trash);
+            return trash;
         }
 
         public bool Discard(Card card) {
@@ -64,6 +73,7 @@ namespace ConsoleApp1 {
             }
             return false;
         }
+
         public bool Trash(Card card) {
             if (hand.Remove(card) || deck.Remove(card)) {
                 trash.Add(card);
@@ -71,6 +81,7 @@ namespace ConsoleApp1 {
             }
             return false;
         }
+
         public bool Destroy(Card card) {
             deck.Remove(card);
             hand.Remove(card);
@@ -78,6 +89,7 @@ namespace ConsoleApp1 {
             trash.Remove(card);
             return allCards.Remove(card);
         }
+
         public bool DrawHand() {
             for (int i = 0; i < cardsPerTurn; i++) {
                 if (!DrawCard()) {
@@ -86,6 +98,31 @@ namespace ConsoleApp1 {
             }
             return true;
         }
+
+        public bool DiscardHand() {
+            discards.AddRange(hand);
+            hand.Clear();
+            return true;
+        }
+
+        public void BeginFight() {
+            deck.Clear();
+            discards.Clear();
+            hand.Clear();
+            trash.Clear();
+            foreach (Card card in allCards) {
+                deck.Add(card);
+            }
+            Shuffle(deck);
+        }
+
+        public void TakeTurn(GameState state) {
+            DrawHand();
+            TurnLogic(state);
+            DiscardHand();
+        }
+        public abstract void TurnLogic(GameState state);
+
         public bool DrawCard() {
             if (deck.Count == 0) {
                 if (discards.Count == 0) {

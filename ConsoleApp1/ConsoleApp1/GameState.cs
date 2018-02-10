@@ -8,7 +8,7 @@ namespace ConsoleApp1 {
         List<IEntity> entities = new List<IEntity>();
         List<Player> players = new List<Player>();
         List<IEntity> enemies = new List<IEntity>();
-        IEntity currentTurn;
+        IEntity currentEntity;
 
         public void AddEntity(IEntity e) {
             entities.Add(e);
@@ -16,6 +16,12 @@ namespace ConsoleApp1 {
                 players.Add((Player)e);
             } else {
                 enemies.Add(e);
+            }
+        }
+
+        public void BeginFight() {
+            foreach (IEntity entity in entities) {
+                entity.BeginFight();
             }
         }
 
@@ -39,6 +45,10 @@ namespace ConsoleApp1 {
             return entities[i];
         }
 
+        public IEntity GetCurrentEntity() {
+            return currentEntity;
+        }
+
         public void Heal(IEntity e, int amount) {
             e.SetHP(e.GetHP() + amount);
         }
@@ -48,7 +58,20 @@ namespace ConsoleApp1 {
         }
 
         public void TestEffect() {
-            Console.WriteLine("Hello world!");
+            Console.WriteLine("You attack!  It's not very effective.");
+        }
+
+        public void NextTurn() {
+            if (currentEntity == null) {
+                currentEntity = entities[0];
+            } else {
+                int turnIndex = entities.IndexOf(currentEntity) + 1;
+                if (turnIndex >= entities.Count) {
+                    turnIndex = 0;
+                }
+                currentEntity = entities[turnIndex];
+            }
+            currentEntity.TakeTurn(this);
         }
     }
 }
