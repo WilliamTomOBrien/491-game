@@ -146,7 +146,7 @@ using UnityEngine;
 
         public void evaluateBegin(){
             for(int i = 0; i < statuses.Count; i++){
-                statuses[i].evaluate();
+                statuses[i].Run();
             }
         }
 
