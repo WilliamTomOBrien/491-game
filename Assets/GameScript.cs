@@ -38,6 +38,7 @@ public class GameScript : MonoBehaviour {
 			turn = state.getEntity(t);
 			state.setCurrentEntity(turn);
 
+			turn.evaluateBegin();
 			turn.DrawHand();
 		}
 		else if(curState == battleState.beginTurn){
