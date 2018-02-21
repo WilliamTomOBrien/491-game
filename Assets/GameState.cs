@@ -64,7 +64,7 @@ using UnityEngine;
             Debug.Log("You attack!  It's not very effective.");
         }
 
-        public void NextTurn() {
+        public IEntity NextTurn() {
             if (currentEntity == null) {
                 currentEntity = entities[0];
             } else {
@@ -74,6 +74,6 @@ using UnityEngine;
                 }
                 currentEntity = entities[turnIndex];
             }
-            currentEntity.TakeTurn(this);
+            return currentEntity;
         }
     }

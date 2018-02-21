@@ -88,13 +88,6 @@ using UnityEngine;
             return false;
         }
 
-        public bool DiscardStatus(Status s) {
-            if (statuses.Remove(s)) {
-                return true;
-            }
-            return false;
-        }
-
     	public void displayHand(){
 	        for(int i = 0; i < hand.Count; i++) {
                 Debug.Log(i + ": " + hand[i].ToString());
@@ -142,12 +135,6 @@ using UnityEngine;
                 deck.Add(card);
             }
             Shuffle(deck);
-        }
-
-        public void evaluateBegin(){
-            for(int i = 0; i < statuses.Count; i++){
-                statuses[i].Run();
-            }
         }
 
         public void TakeTurn(GameState state) {

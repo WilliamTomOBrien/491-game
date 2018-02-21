@@ -9,9 +9,17 @@ public class GameScript : MonoBehaviour {
 	IEntity turn;
 	Card activatedCard;
 
-	GameState state;
+	int msgNumber = 0;
 
-	int t = 0;
+	GameState state;
+	public void UnityOutputTag(string tag, string msg){
+		Debug.Log(tag + ": " + msg);
+		msgNumber++;
+	}
+
+	public void UnityOutput(string msg){
+		UnityOutput(msgNumber, msg);
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -35,14 +43,8 @@ public class GameScript : MonoBehaviour {
 	void Update () {
 		if(curState == battleState.beginFight){
 			state.BeginFight();
-			turn = state.getEntity(t);
-			state.setCurrentEntity(turn);
-
-			turn.evaluateBegin();
-			turn.DrawHand();
 		}
 		else if(curState == battleState.beginTurn){
-			turn = state.getEntity(t);
 			turn.DrawHand();
 			turn.displayHand();
 			curState = battleState.chooseCard;
@@ -76,7 +78,7 @@ public class GameScript : MonoBehaviour {
 		else if(curState == battleState.endTurn){
 			turn.DiscardHand();
 			Debug.Log("Your turn is done!");
-			t++;
+			turn = state.NextTurn();
 			curState = battleState.beginTurn;
 		}
 	}

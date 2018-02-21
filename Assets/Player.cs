@@ -11,8 +11,7 @@ public abstract class Player : IEntity {
         private int hp;
 
         private int currentEnergy;
-        
-        private List<Status> statuses;
+
         private List<Card> classCards;
 
         public Player(int startingHP, int cardsPerTurn, int energyPerTurn, List<Card> classCards, List<Card> startingCards) : base(startingHP, cardsPerTurn, energyPerTurn, startingCards) {
