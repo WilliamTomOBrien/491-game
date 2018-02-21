@@ -9,17 +9,10 @@ public class GameScript : MonoBehaviour {
 	IEntity turn;
 	Card activatedCard;
 
-	int msgNumber = 0;
+	
 
 	GameState state;
-	public void UnityOutputTag(string tag, string msg){
-		Debug.Log(tag + ": " + msg);
-		msgNumber++;
-	}
 
-	public void UnityOutput(string msg){
-		UnityOutput(msgNumber, msg);
-	}
 
 	// Use this for initialization
 	void Start () {
@@ -48,7 +41,7 @@ public class GameScript : MonoBehaviour {
 			turn.DrawHand();
 			turn.displayHand();
 			curState = battleState.chooseCard;
-			Debug.Log("Turn Begins");
+			GameState.UnityOutput("Turn Begins");
 		}
 		else if(curState == battleState.chooseCard){
 			//if a card a picked, do use effect (discard, trash, ect.)
@@ -77,7 +70,7 @@ public class GameScript : MonoBehaviour {
 		}
 		else if(curState == battleState.endTurn){
 			turn.DiscardHand();
-			Debug.Log("Your turn is done!");
+			GameState.UnityOutput("Your turn is done!");
 			turn = state.NextTurn();
 			curState = battleState.beginTurn;
 		}

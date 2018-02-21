@@ -18,6 +18,18 @@ using UnityEngine;
             }
         }
 
+    private static int msgNumber = 0;
+
+    public static void UnityOutput(string tag, string msg){
+		Debug.Log(tag + ": " + msg);
+		msgNumber++;
+	}
+
+	public static void UnityOutput(string msg){
+		UnityOutput(String.Format("{0}", msgNumber), msg);
+	}
+
+
         public void BeginFight() {
             foreach (IEntity entity in entities) {
                 entity.BeginFight();
@@ -61,7 +73,7 @@ using UnityEngine;
         }
 
         public void TestEffect() {
-            Debug.Log("You attack!  It's not very effective.");
+            UnityOutput("You attack!  It's not very effective.");
         }
 
         public IEntity NextTurn() {
