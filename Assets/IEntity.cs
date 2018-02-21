@@ -90,7 +90,7 @@ using UnityEngine;
 
     	public void displayHand(){
 	        for(int i = 0; i < hand.Count; i++) {
-                Debug.Log(i + ": " + hand[i].ToString());
+                GameState.UnityOutput(i + ": " + hand[i].ToString());
             }
 
     }

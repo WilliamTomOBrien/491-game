@@ -9,9 +9,10 @@ public class GameScript : MonoBehaviour {
 	IEntity turn;
 	Card activatedCard;
 
+	
+
 	GameState state;
 
-	int t = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -35,17 +36,12 @@ public class GameScript : MonoBehaviour {
 	void Update () {
 		if(curState == battleState.beginFight){
 			state.BeginFight();
-			turn = state.getEntity(t);
-			state.setCurrentEntity(turn);
-
-			turn.DrawHand();
 		}
 		else if(curState == battleState.beginTurn){
-			turn = state.getEntity(t);
 			turn.DrawHand();
 			turn.displayHand();
 			curState = battleState.chooseCard;
-			Debug.Log("Turn Begins");
+			GameState.UnityOutput("Turn Begins");
 		}
 		else if(curState == battleState.chooseCard){
 			//if a card a picked, do use effect (discard, trash, ect.)
@@ -74,8 +70,8 @@ public class GameScript : MonoBehaviour {
 		}
 		else if(curState == battleState.endTurn){
 			turn.DiscardHand();
-			Debug.Log("Your turn is done!");
-			t++;
+			GameState.UnityOutput("Your turn is done!");
+			turn = state.NextTurn();
 			curState = battleState.beginTurn;
 		}
 	}
