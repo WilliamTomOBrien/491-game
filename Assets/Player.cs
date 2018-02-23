@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-
-
-public abstract class Player : IEntity {
+public abstract class Player : Entity {
 
         private int maxHP;
         private int hp;
@@ -19,7 +17,8 @@ public abstract class Player : IEntity {
             maxHP = startingHP;
             hp = startingHP;
             currentEnergy = energyPerTurn;
-        } 
+        }
+
         override
         public void TurnLogic(GameState state) {
        /*     if (state.GetCurrentEntity() == state.getEntity(0)) {
@@ -64,16 +63,16 @@ public abstract class Player : IEntity {
         private static int cardsPerTurn = 5;
         private static int energyPerTurn = 3;
 
-        public Wizard() : base(startingHP, cardsPerTurn, energyPerTurn, getClassCards(), getStartingCards()) {
+        public Wizard() : base(startingHP, cardsPerTurn, energyPerTurn, GetClassCards(), GetStartingCards()) {
         }
 
-        private static List<Card> getClassCards() {
+        private static List<Card> GetClassCards() {
             return new List<Card> {
                 new Attack()
             };
         }
 
-        private static List<Card> getStartingCards() {
+        private static List<Card> GetStartingCards() {
             return new List<Card> {
                 new Attack(),
                 new Attack(),

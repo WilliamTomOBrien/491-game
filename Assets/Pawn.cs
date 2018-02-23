@@ -8,10 +8,10 @@ using UnityEngine;
         private static int cardsPerTurn = 5;
         private static int energyPerTurn = 3;
 
-        public Pawn() : base(startingHP, cardsPerTurn, energyPerTurn, getStartingCards()) {
+        public Pawn() : base(startingHP, cardsPerTurn, energyPerTurn, GetStartingCards()) {
         }
 
-        private static List<Card> getStartingCards() {
+        private static List<Card> GetStartingCards() {
             return new List<Card> {
                 new Attack(),
                 new Attack(),
@@ -27,7 +27,7 @@ using UnityEngine;
         }
 
         public override void TurnLogic(GameState state) {
-            Debug.Log("The pawn attacks! It's not very effective.");
-            Debug.Log("\n");
+            GameState.UnityOutput("The pawn attacks! It's not very effective.");
+            GameState.UnityOutput("\n");
         }
     }
