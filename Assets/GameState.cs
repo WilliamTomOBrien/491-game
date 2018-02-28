@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-    
+
 public class GameState {
 
     private int numPlayers = 0;
@@ -17,24 +17,26 @@ public class GameState {
         } else {
             enemies.Add(e);
         }
+        e.SetState(this);
     }
 
     private static int msgNumber = 0;
 
-    public static void UnityOutput(string tag, string msg){
-		Debug.Log(tag + ": " + msg);
-		msgNumber++;
-	}
+    public static void UnityOutput(string tag, string msg) {
+        Debug.Log(tag + ": " + msg);
+        msgNumber++;
+    }
 
-	public static void UnityOutput(string msg){
-		UnityOutput(String.Format("{0}", msgNumber), msg);
-	}
+    public static void UnityOutput(string msg) {
+        UnityOutput(String.Format("{0}", msgNumber), msg);
+    }
 
 
     public void BeginFight() {
         foreach (Entity entity in entities) {
             entity.BeginFight();
         }
+        NextTurn();
     }
 
     public void BeginTurn() {
@@ -56,7 +58,7 @@ public class GameState {
     public List<Entity> GetEntities() {
         return new List<Entity>(entities);
     }
-
+    
     public List<Entity> GetEnemies() {
         return new List<Entity>(enemies);
     }
@@ -69,8 +71,15 @@ public class GameState {
         return currentEntity;
     }
 
-    public void SetCurrentEntity(Entity i){
+    public void SetCurrentEntity(Entity i) {
         currentEntity = i;
+    }
+
+    public void Kill(Entity i) {
+        if (currentEntity == i) {
+            NextTurn();
+        }
+        entities.Remove(i);
     }
 
     public void Heal(Entity e, int amount) {
