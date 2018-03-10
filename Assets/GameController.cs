@@ -4,19 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
-    List<GameObject> Hand;
+    Entity currentEntity;
 
 	void Awake () {
-		Hand = new List<GameObject>();
+
 	}
 
 	// Use this for initialization
 	void Start () {
-      for(int i = 0; i < 5; i++) {
-          Hand.Add(Instantiate(Resources.Load("Card"), new Vector2(i*2, 0), Quaternion.identity) as GameObject);
-		  Card c = Hand[i].GetComponent<Card>();
-		  Debug.Log("Made: " + c);
-      }
+		GameObject g = Instantiate(Resources.Load("Player"), new Vector2(7, 3), Quaternion.identity) as GameObject;
+		currentEntity = g.GetComponent<Player>();
+
+		currentEntity.BeginTurn();
 	}
 
 	// Update is called once per frame

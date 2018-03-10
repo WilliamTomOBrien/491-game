@@ -52,8 +52,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Card.cs" />
+     <Compile Include="Assets\CardState.cs" />
+     <Compile Include="Assets\Entity.cs" />
      <Compile Include="Assets\GameController.cs" />
      <Compile Include="Assets\Player.cs" />
+     <Compile Include="Assets\Task.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/home/shadowiq/Unity-2017.3.0p2/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

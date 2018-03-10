@@ -178,7 +178,11 @@
 -define:ENABLE_NATIVE_ARRAY_CHECKS
 -define:UNITY_TEAM_LICENSE
 'Assets/Card.cs'
+'Assets/CardState.cs'
+'Assets/Entity.cs'
 'Assets/GameController.cs'
+'Assets/Player.cs'
+'Assets/Task.cs'
 -r:'/home/shadowiq/Unity-2017.3.0p2/Editor/Data/Mono/lib/mono/unity/System.Runtime.Serialization.dll'
 -r:'/home/shadowiq/Unity-2017.3.0p2/Editor/Data/Mono/lib/mono/unity/System.Xml.Linq.dll'
 -r:'/home/shadowiq/Unity-2017.3.0p2/Editor/Data/Mono/lib/mono/unity/UnityScript.dll'
