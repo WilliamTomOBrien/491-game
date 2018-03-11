@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Player : Entity {
 
-    private List<GameObject> hand;
+    public List<GameObject> hand;
 
-    private List<CardState> deck;
-    private List<CardState> discards;
-    private List<CardState> trash;
+    public List<CardState> deck;
+    public List<CardState> discard;
+    public List<CardState> trash;
 
     public int cardsPerTurn = 5;
     public int handLimit = 5;
@@ -24,7 +24,7 @@ public class Player : Entity {
         hand = new List<GameObject>();
 
         deck = new List<CardState>();
-        discards = new List<CardState>();
+        discard = new List<CardState>();
         trash = new List<CardState>();
 
         energyPerTurn = 4;
@@ -48,5 +48,36 @@ public class Player : Entity {
 		  Debug.Log("Made Card: " + i);
         }
     }
+
+    public void HighlightCard(int i){
+        Debug.Log("Highlighting Card: " + i);
+        hand[i].GetComponent<Card>().Highlight();
+    }
+
+    public void UnHighlightCard(int i){
+        hand[i].GetComponent<Card>().UnHighlight();
+    }
+
+    public bool NoCardHighlighted(){
+        for(int i = 0; i < hand.Count; i++){
+            if(hand[i].GetComponent<Card>().isHighlighted()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool CardIsHighlighted(int i){
+        return hand[i].GetComponent<Card>().isHighlighted();
+    }
+
+    public bool HasCards(){
+        return !(hand.Count == 0);
+    }
+
+    public int GetNumberOfCards(){
+        return hand.Count;
+    }
+
 
 }

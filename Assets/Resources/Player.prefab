@@ -113,6 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   hp: 100
+  hand: []
   cardsPerTurn: 5
   handLimit: 5
   energyPerTurn: 4
