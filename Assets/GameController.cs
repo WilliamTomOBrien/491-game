@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour {
 		SelectEntity
 	};
 
-	SelectionType selectionType;
+	public SelectionType selectionType;
 
 	void Awake () {
 		selectionType = SelectionType.SelectCardToPlay;
@@ -33,8 +33,9 @@ public class GameController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(selectionType == SelectionType.SelectCardToPlay){
+		if(selectionType == SelectionType.SelectCardToPlay && currentEntity.HasCards()){
 			Debug.Log("The Highlighted Card is highlighted: " + currentEntity.CardIsHighlighted(numIndex));
+			Debug.Log("Selected Card: " + numIndex);
 
 			numObjects = currentEntity.GetNumberOfCards();
 			if(currentEntity.NoCardHighlighted() && currentEntity.HasCards()){
@@ -50,13 +51,25 @@ public class GameController : MonoBehaviour {
 				numIndex = (numIndex + 1) % numObjects;
 				currentEntity.HighlightCard(numIndex);
 				prevCode = KeyCode.RightArrow;
-			} else if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow)){
+			} else if(Input.GetKey(KeyCode.Return) && prevCode == KeyCode.A) {
+				prevCode = KeyCode.Return;
+				currentEntity.ActivateCard(numIndex);
+
+				if(currentEntity.HasCards()){
+					currentEntity.HighlightCard(0);
+					numIndex = 0;
+				}
+				//break out of this loop if we here and we have no cards fam
+
+			} else if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.Return)){
 				//Do nothing
 				//Player is holding down the key
 			} else {
 				prevCode = KeyCode.A;
 
 			}
+
+			
 		}
 	}
 

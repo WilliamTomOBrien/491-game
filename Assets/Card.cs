@@ -32,7 +32,7 @@ public class Card : MonoBehaviour {
         cardState = c;
     }
 
-	void OnMouseDown () {
+	public void ActivateCard () {
         
 
         //Get input needed, 
@@ -56,6 +56,10 @@ public class Card : MonoBehaviour {
             Debug.Log("You hit the card fam");
         }
 	}
+
+    void OnMouseDown(){
+        ActivateCard();
+    }
 
     override
     public string ToString(){

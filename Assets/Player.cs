@@ -49,6 +49,10 @@ public class Player : Entity {
         }
     }
 
+    public void ActivateCard(int i){
+        hand[i].GetComponent<Card>().ActivateCard();
+    }
+
     public void HighlightCard(int i){
         Debug.Log("Highlighting Card: " + i);
         hand[i].GetComponent<Card>().Highlight();
