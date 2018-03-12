@@ -10,6 +10,8 @@ public class Card : MonoBehaviour {
     public Color baseColor = Color.black;
     public Color highlightedColor; 
 
+    private int i = 0;
+
     void Awake () {
 
     }
@@ -101,6 +103,7 @@ public class Card : MonoBehaviour {
 
            }
         }
+
         GameObject.FindWithTag("MainCamera").GetComponent<GameController>().SetInputToNull();
         //We want to repeat using the same input when we can, but only for the same card, so we 
         //have to set it to null in between
