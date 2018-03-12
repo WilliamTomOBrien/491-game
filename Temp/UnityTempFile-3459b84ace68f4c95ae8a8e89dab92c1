@@ -179,6 +179,8 @@
 -define:UNITY_TEAM_LICENSE
 'Assets/Card.cs'
 'Assets/CardState.cs'
+'Assets/CurrentEntityText.cs'
+'Assets/Enemy.cs'
 'Assets/Entity.cs'
 'Assets/GameController.cs'
 'Assets/Player.cs'

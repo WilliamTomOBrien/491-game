@@ -53,6 +53,8 @@
   <ItemGroup>
      <Compile Include="Assets\Card.cs" />
      <Compile Include="Assets\CardState.cs" />
+     <Compile Include="Assets\CurrentEntityText.cs" />
+     <Compile Include="Assets\Enemy.cs" />
      <Compile Include="Assets\Entity.cs" />
      <Compile Include="Assets\GameController.cs" />
      <Compile Include="Assets\Player.cs" />

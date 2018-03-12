@@ -113,6 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   hp: 100
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightedColor: {r: 0.97794116, g: 0.050335195, b: 0.9523522, a: 0}
   hand: []
   cardsPerTurn: 5
   handLimit: 5

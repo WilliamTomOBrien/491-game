@@ -30,13 +30,13 @@ public class Player : Entity {
         energyPerTurn = 4;
         currentEnergy = energyPerTurn;
 
-        Task ex = new Example();
+        Task ex = new Damage(10);
         List<Task> li = new List<Task>();
 
         li.Add(ex);
 
         for(int i = 0; i < 50; i++){
-            deck.Add(new CardState("example", 0, li));
+            deck.Add(new CardState("example", 1, li));
         }
     }
 
@@ -69,6 +69,10 @@ public class Player : Entity {
             }
         }
         return true;
+    }
+
+    public void LoseEnergy(int n){
+        currentEnergy -= n;
     }
 
     public bool CardIsHighlighted(int i){

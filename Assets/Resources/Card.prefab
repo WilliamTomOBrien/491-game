@@ -200,5 +200,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d3812f18c584dbdb5fa7bca30eb932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseColor: {r: 0, g: 0.8758622, b: 1, a: 0}
-  highlightedColor: {r: 0.86764705, g: 0.83816814, b: 0.44020328, a: 0}
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  highlightedColor: {r: 0.37292674, g: 0.5147059, b: 0.14759947, a: 0}
