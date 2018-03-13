@@ -5,41 +5,41 @@ using UnityEngine;
 
 public class Enemy : Entity {
 
+    System.Random r;
+    public List<GameObject> players;
     public List<CardState> hand;
-
-    public List<CardState> deck;
-    public List<CardState> discard;
-
+    public int count;
 
     void Awake(){
-        allCards = new List<CardState>();
-
+        r = new System.Random();
         hand = new List<CardState>();
 
-        deck = new List<CardState>();
-        discard = new List<CardState>();
-
-        Task ex = new Example();
+        Task ex = new Damage(10);
         List<Task> li = new List<Task>();
 
         li.Add(ex);
 
-        for(int i = 0; i < 50; i++){
-            deck.Add(new CardState("example", 1, li));
+        for(int i = 0; i < 3; i++){
+            hand.Add(new CardState("Damage 10", 1, li));
         }
     }
 
     override public void BeginTurn(){
-        // for(int i = 0; i < 5; i++) {
-        //   hand.Add(Instantiate(Resources.Load("Card"), new Vector2(i*2, 0), Quaternion.identity) as GameObject);
-		//   hand[i].GetComponent<Card>().AddState(deck[0]);
-        //   deck.Remove(deck[0]);
-		//   Debug.Log("Made Card: " + i);
-        // }
+        gameObject.tag = "CurrentEntity";
     }
 
-    public void ActivateCard(int i){
-        //hand[i].ActivateCard();
+    public void ActivateEffect(){
+        List<GameObject> entities = GameObject.FindWithTag("MainCamera").GetComponent<GameController>().entities;
+        players = new List<GameObject>();
+        foreach(GameObject o in entities){
+            if(o.GetComponent<Entity>() is Player) players.Add(o);
+        }
+        CardState c = hand[r.Next(hand.Count)];
+        for(int i = 0; i < c.tasks.Count; i++){
+            c.tasks[i].Run(players[r.Next(players.Count)]);
+        }
+
+        gameObject.tag = "Enemy";
     }
 
 

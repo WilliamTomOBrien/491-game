@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Entity {
 
@@ -40,13 +41,27 @@ public class Player : Entity {
         }
     }
 
+
+    
+
     override public void BeginTurn(){
+        currentEnergy = energyPerTurn;
         for(int i = 0; i < 5; i++) {
           hand.Add(Instantiate(Resources.Load("Card"), new Vector2(i*2, 0), Quaternion.identity) as GameObject);
 		  hand[i].GetComponent<Card>().AddState(deck[0]);
           deck.Remove(deck[0]);
 		  Debug.Log("Made Card: " + i);
         }
+        gameObject.tag = "CurrentEntity";
+    }
+
+    override public void EndTurn(){
+        for(int i = 0; i < hand.Count; i++){
+            discard.Add(hand[i].GetComponent<Card>().cardState);
+            Destroy(hand[i]);
+            hand.Remove(hand[i]);
+        }
+        gameObject.tag = "Player";
     }
 
     public void ActivateCard(int i){

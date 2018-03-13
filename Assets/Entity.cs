@@ -22,6 +22,14 @@ public class Entity : MonoBehaviour {
         
     }
 
+    public virtual void EndTurn(){
+
+    }
+
+    public virtual void ActivateCard(){
+        
+    }
+
     public void Highlight(){
         gameObject.GetComponent<Renderer>().material.color = highlightedColor;
         Debug.Log("This is highlighting: " + (gameObject.GetComponent<Renderer>().material.color == highlightedColor));

@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour {
 
-    private CardState cardState;
-    private Coroutine nudger = null;
+    public CardState cardState;
     public Color baseColor = Color.black;
     public Color highlightedColor; 
 
-    private int i = 0;
 
     void Awake () {
 
@@ -35,27 +34,16 @@ public class Card : MonoBehaviour {
 	public void ActivateCard () {
         
         if(GameObject.FindWithTag("CurrentEntity").GetComponent<Entity>() is Player){
+            Renderer[] r = gameObject.GetComponents<Renderer>();
+            for(int i = 0; i < r.Length; i++){
+                Debug.Log("Fam I ran");
+                r[i].enabled = false;
+            }
             //Get input needed, 
             //give it to function in cardState
             //repeat until finished
 
-
-
-            StartCoroutine(DoTasks(cardState.tasks));
-
-            //Add the card state to the current 
-            //players discard pile
-            GameObject j = GameObject.FindWithTag("CurrentEntity");
-            Entity e = j.GetComponent<Entity>();
-            Player p = (Player) e;
-            p.LoseEnergy(cardState.cost);
-
-            p.hand.Remove(gameObject);
-            p.discard.Add(cardState);
-
-            Destroy(gameObject);
-            
-
+            StartCoroutine("DoTasks");
         }
 	}
 
@@ -68,8 +56,9 @@ public class Card : MonoBehaviour {
         return cardState.name;
     }
 
-    private IEnumerator DoTasks(List<Task> tasks) {
-        for(int i = 0; i < tasks.Count; i++) {
+    private IEnumerator DoTasks() {
+        GameObject.FindWithTag("MainCamera").GetComponent<GameController>().SetBoolCheckEndOfTurn(false);
+        for(int i = 0; i < cardState.tasks.Count; i++) {
             //set the appropriate task
             Debug.Log(i);
            if(cardState.tasks[i].type == Task.Input.Null){
@@ -100,9 +89,24 @@ public class Card : MonoBehaviour {
                 GameObject.FindWithTag("MainCamera").GetComponent<GameController>().SetInputToNull();
 
                 Debug.Log("This was run");
-
            }
         }
+            //Add the card state to the current 
+            //players discard pile
+        GameObject j = GameObject.FindWithTag("CurrentEntity");
+        Entity e = j.GetComponent<Entity>();
+        Player p = (Player) e;
+        p.LoseEnergy(cardState.cost);
+
+        p.hand.Remove(gameObject);
+        p.discard.Add(cardState);
+
+        Destroy(gameObject);
+        GameObject.FindWithTag("MainCamera").GetComponent<GameController>().SetBoolCheckEndOfTurn(true);
+
+
+
+
 
         GameObject.FindWithTag("MainCamera").GetComponent<GameController>().SetInputToNull();
         //We want to repeat using the same input when we can, but only for the same card, so we 
