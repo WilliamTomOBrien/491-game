@@ -10,21 +10,29 @@ public class Card : MonoBehaviour {
     public Color baseColor = Color.black;
     public Color highlightedColor; 
 
+    private SpriteRenderer s;
+
 
     void Awake () {
 
     }
 
     public void Highlight(){
-        gameObject.GetComponent<Renderer>().material.color = highlightedColor;
+        s = gameObject.GetComponent<SpriteRenderer>();
+        s.sprite = Resources.Load<Sprite>("Sprites/CardFrontHighlighted");
+        s.sortingOrder = 2;
 
     }
     public void UnHighlight(){
-        gameObject.GetComponent<Renderer>().material.color = baseColor;
+        s = gameObject.GetComponent<SpriteRenderer>();
+        s.sprite = Resources.Load<Sprite>("Sprites/CardFront");
+        s.sortingOrder = 0;
     }
 
     public bool isHighlighted(){
-        return !(gameObject.GetComponent<Renderer>().material.color == baseColor);
+        s = gameObject.GetComponent<SpriteRenderer>();
+
+        return s.sprite == Resources.Load<Sprite>("Sprites/CardFrontHighlighted");
     }
 
     public void AddState(CardState c) {

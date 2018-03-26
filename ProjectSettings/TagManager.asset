@@ -17,8 +17,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - EntityLayer
+  - CardLayer
   - 
   - 
   - 
@@ -44,4 +44,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: CardLayer
+    uniqueID: 4226190883
+    locked: 0
+  - name: EntityLayer
+    uniqueID: 2258113541
     locked: 0

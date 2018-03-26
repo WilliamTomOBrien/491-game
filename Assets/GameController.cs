@@ -32,12 +32,12 @@ public class GameController : MonoBehaviour {
 		selectionType = SelectionType.SelectCardToPlay;
 		entities = new List<GameObject>();
 
-		entities.Add(Instantiate(Resources.Load("Player"), new Vector2(7, 3), Quaternion.identity) as GameObject);
+		entities.Add(Instantiate(Resources.Load("Player"), new Vector2(-3, 0), Quaternion.identity) as GameObject);
 		entities[0].tag = "CurrentEntity";
 
-		entities.Add(Instantiate(Resources.Load("Player"), new Vector2(7, 2), Quaternion.identity) as GameObject);
-		entities.Add(Instantiate(Resources.Load("Enemy"), new Vector2(-2, 3), Quaternion.identity) as GameObject);
-		entities.Add(Instantiate(Resources.Load("Enemy"), new Vector2(-2, 2), Quaternion.identity) as GameObject);
+		entities.Add(Instantiate(Resources.Load("Player"), new Vector2(-5, 0), Quaternion.identity) as GameObject);
+		entities.Add(Instantiate(Resources.Load("EnemyMagician"), new Vector2(5, 0), Quaternion.identity) as GameObject);
+		entities.Add(Instantiate(Resources.Load("EnemyMagician"), new Vector2(3, 0), Quaternion.identity) as GameObject);
 
 	}
 

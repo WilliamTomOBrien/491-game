@@ -16,6 +16,9 @@ public class Player : Entity {
     public int handLimit = 5;
     public int energyPerTurn = 4;
     public int currentEnergy = 4;
+    public int numOfCards = 5;
+
+    public float r = 4f;
 
 
 
@@ -45,9 +48,11 @@ public class Player : Entity {
     
 
     override public void BeginTurn(){
+        numOfCards = cardsPerTurn;
         currentEnergy = energyPerTurn;
-        for(int i = 0; i < 5; i++) {
-          hand.Add(Instantiate(Resources.Load("Card"), new Vector2(i*2 - 4, -3), Quaternion.identity) as GameObject);
+        for(int i = 0; i < numOfCards; i++) {
+          hand.Add(Instantiate(Resources.Load("Card"), new Vector2((float) (r*Math.Sin((Math.PI/180)*i*90/(numOfCards - 1) - (Math.PI/180)*45)), 
+          (float) (-6f + r*Math.Cos((Math.PI/180)*i*90/(numOfCards - 1) - (Math.PI/180)*45))), Quaternion.identity) as GameObject);
 		  hand[i].GetComponent<Card>().AddState(deck[0]);
           deck.Remove(deck[0]);
 		  Debug.Log("Made Card: " + i);
