@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - CurrentEntity
+  - Enemy
+  - Player1
+  - Player2
+  - Arrow
+  - Entity
+  - HighlightedEntity
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - EntityLayer
+  - CardLayer
+  - PileLayer
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: CardLayer
+    uniqueID: 4226190883
+    locked: 0
+  - name: EntityLayer
+    uniqueID: 2258113541
+    locked: 0
+  - name: PileLayer
+    uniqueID: 2155004891
+    locked: 0
