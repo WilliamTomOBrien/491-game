@@ -23,7 +23,7 @@ public class CardPile : MonoBehaviour {
         for(int i = 0; i < 49; i++){
             List<Task> cList = new List<Task>();
             cList.Add(new DebugTask(i));
-            CardState c = new CardState("Debug", 0, cList);
+            CardState c = new CardState("Debug", 0, cList, "Sounds/PunchSound");
             deck.Add(c);
         }
         Initiate(5);
@@ -37,7 +37,9 @@ public class CardPile : MonoBehaviour {
     }
 
 
-    public void Initiate(int numOfDisplay){
+    public void Initiate(int numOfDisplayVar){
+        int numOfDisplay = (numOfDisplayVar <= deck.Count) ? numOfDisplayVar : deck.Count;
+
         for(int i = 0; i < numOfDisplay; i++){ 
             displayed.Add(Instantiate(Resources.Load("Card"), new Vector3(-4 + i*2, 0, 0), Quaternion.identity) as GameObject);
             cardPositions.Add(displayed[i].transform.position);
@@ -52,6 +54,10 @@ public class CardPile : MonoBehaviour {
 
     public void Select(){
         deck[currentIndex].RunTask(null, 0);
+    }
+
+    public GameObject GetSelected(){
+        return displayed[indexFive];
     }
 
     public void Right(){

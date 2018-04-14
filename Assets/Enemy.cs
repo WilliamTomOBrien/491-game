@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class Enemy : Entity {
 
-    System.Random r;
-    public List<GameObject> players;
-    public List<CardState> hand;
-    public int count;
+    private System.Random r;
+    private List<GameObject> players;
+    private List<CardState> hand;
+    private int count;
 
     void Awake(){
         r = new System.Random();
@@ -20,7 +20,7 @@ public class Enemy : Entity {
         li.Add(ex);
 
         for(int i = 0; i < 3; i++){
-            hand.Add(new CardState("Damage 10", 1, li));
+            hand.Add(new CardState("Damage 10", 1, li, "Sounds/PunchSound"));
         }
     }
 
@@ -29,18 +29,19 @@ public class Enemy : Entity {
     }
 
     public void ActivateEffect(){
+
         List<GameObject> entities = GameController.GetGameController().entities;
         players = new List<GameObject>();
         foreach(GameObject o in entities){
             if(o.GetComponent<Entity>() is Player) players.Add(o);
         }
+
         CardState c = hand[r.Next(hand.Count)];
-        for(int i = 0; i < c.tasks.Count; i++){
-            c.tasks[i].Run(players[r.Next(players.Count)]);
+        foreach (Task task in c.getTasks()) {
+            task.Run(players[r.Next(players.Count)]);
         }
 
         gameObject.tag = "Enemy";
     }
-
 
 }

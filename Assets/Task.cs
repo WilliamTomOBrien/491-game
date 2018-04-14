@@ -1,8 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
 
 public class Task {
 
@@ -11,28 +10,28 @@ public class Task {
         Entity,
         Enemy,
         Player,
+        DiscardCard,
         Null
     };
 
     public Input type;
-    public virtual void Run(GameObject input) {
-    }
+    public virtual void Run(GameObject input) {}
 }
 
 
 public class Damage : Task {
-    int damage = 0;
-    
-    override public void Run(GameObject input){
-        Entity p = input.GetComponent<Entity>();
-        p.hp -= damage;
-    }
 
-    public Damage(int damage){
+    int damage;
+
+    public Damage(int damage) {
         this.damage = damage;
         this.type = Input.Entity;
     }
 
+    override public void Run(GameObject input){
+        Entity p = input.GetComponent<Entity>();
+        p.Damage(damage);
+    }
 }
 
 public class DebugTask : Task {
@@ -49,12 +48,27 @@ public class DebugTask : Task {
 }
 
 public class Example : Task {
-    override public void Run(GameObject input){
-        Debug.Log("Task Run!");
-    }
 
-    public Example(){
+    public Example() {
         this.type = Input.Null;
     }
 
+    override public void Run(GameObject input) {
+        Debug.Log("Task Run!");
+    }
+}
+
+public class Heal : Task
+{
+    int damage = 0;
+
+    public Heal(int damage) {
+        this.damage = damage;
+        this.type = Input.Entity;
+    }
+
+    override public void Run(GameObject input) {
+        Entity p = input.GetComponent<Entity>();
+        p.Heal(damage);
+    }
 }

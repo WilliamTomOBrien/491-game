@@ -9,8 +9,8 @@ TagManager:
   - Player1
   - Player2
   - Arrow
-  - Entity
   - HighlightedEntity
+  - Entity
   layers:
   - Default
   - TransparentFX
@@ -22,8 +22,8 @@ TagManager:
   - 
   - EntityLayer
   - CardLayer
-  - PileLayer
-  - 
+  - SliderLayer
+  - ArrowLayer
   - 
   - 
   - 
@@ -54,6 +54,9 @@ TagManager:
   - name: EntityLayer
     uniqueID: 2258113541
     locked: 0
-  - name: PileLayer
-    uniqueID: 2155004891
+  - name: SliderLayer
+    uniqueID: 265258233
+    locked: 0
+  - name: ArrowLayer
+    uniqueID: 3203174223
     locked: 0

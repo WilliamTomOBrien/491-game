@@ -33,12 +33,12 @@ public class Player : Entity {
         currentEnergy = energyPerTurn;
 
         Task ex = new Damage(10);
-        List<Task> li = new List<Task>();
+        List<Task> li = new List<Task> {
+            ex
+        };
 
-        li.Add(ex);
-
-        for(int i = 0; i < 50; i++){
-            deck.Add(new CardState("example", 1, li));
+        for (int i = 0; i < 50; i++){
+            deck.Add(new CardState("example", 1, li, "Sounds/PunchSound"));
         }
     }
 
@@ -49,16 +49,28 @@ public class Player : Entity {
         for(int i = 0; i < numOfCards; i++) {
           hand.Add(Instantiate(Resources.Load("Card"), new Vector2((float) (r*Math.Sin((Math.PI/180)*i*90/(numOfCards - 1) - (Math.PI/180)*45)), 
           (float) (-6f + r*Math.Cos((Math.PI/180)*i*90/(numOfCards - 1) - (Math.PI/180)*45))), Quaternion.identity) as GameObject);
-		  hand[i].GetComponent<Card>().AddState(deck[0]);
+		  hand[i].GetComponent<Card>().SetState(deck[0]);
           deck.Remove(deck[0]);
 		  Debug.Log("Made Card: " + i);
         }
         gameObject.tag = "CurrentEntity";
     }
 
+    public void OrganizeCards(){
+        numOfCards = hand.Count;
+        for(int i = 0; i < numOfCards; i++){
+         //   hand[i].transform.position = new Vector3((float) (r*Math.Sin((Math.PI/180)*i*(numOfCards*14))/(numOfCards - 1) - (Math.PI/180)*45),
+       //     (float) (-6f + r*Math.Cos((Math.PI/180)*i*(numOfCadrs*14))/(numOfCards - 1) - (Math.PI/180)*45)), 0;
+        //     hand[i].transform.position = new Vector3((float) (r*Math.Sin((Math.PI/180)*i*(numOfCards*14))/(numOfCards - 1) - (Math.PI/180)*45)),
+        //   (float) (-6f + r*Math.Cos((Math.PI/180)*i*(numOfCadrs*14))/(numOfCards - 1) - (Math.PI/180)*45)), 0);
+        }
+        //r =  4 - (4 - numOfCards)*.35f;
+    }
+
+
     override public void EndTurn() {
         for(int i = 0; i < hand.Count; i++){
-            discard.Add(hand[i].GetComponent<Card>().cardState);
+            discard.Add(hand[i].GetComponent<Card>().GetState());
             Destroy(hand[i]);
             hand.Remove(hand[i]);
         }
@@ -77,6 +89,21 @@ public class Player : Entity {
         hand[i].GetComponent<Card>().UnHighlight();
     }
 
+    public bool NoCardHighlighted() {
+        for(int i = 0; i < hand.Count; i++){
+            if(hand[i].GetComponent<Card>().IsHighlighted()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void UnSelectAll(){
+        for(int i = 0; i < hand.Count; i++) {
+            hand[i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/FistStatic");
+        }
+    }
+
     public void HighlightCardSelect(int i) {
         hand[i].GetComponent<Card>().HighlightSelect();
     }
@@ -85,13 +112,8 @@ public class Player : Entity {
         return hand[i];
     }
 
-    public bool NoCardHighlighted() {
-        for(int i = 0; i < hand.Count; i++){
-            if(hand[i].GetComponent<Card>().IsHighlighted()){
-                return false;
-            }
-        }
-        return true;
+    public List<CardState> GetDiscard(){
+        return discard;
     }
 
     public void LoseEnergy(int n) {
