@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{CE3E1980-5E3D-B456-EB54-D2239E7BBFEC}</ProjectGuid>
+    <ProjectGuid>{8953B17E-F7CE-FD38-DB49-7985F9EA0C4F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -54,12 +54,16 @@
      <Compile Include="Assets\Card.cs" />
      <Compile Include="Assets\CardPile.cs" />
      <Compile Include="Assets\CardState.cs" />
+     <Compile Include="Assets\CardStateBuilder.cs" />
      <Compile Include="Assets\CurrentEntityText.cs" />
      <Compile Include="Assets\Enemy.cs" />
+     <Compile Include="Assets\EnemyBuilder.cs" />
+     <Compile Include="Assets\EnemyState.cs" />
      <Compile Include="Assets\Entity.cs" />
      <Compile Include="Assets\GameController.cs" />
      <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\Task.cs" />
+     <Compile Include="Assets\TaskBuilder.cs" />
      <Compile Include="Assets\TestController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/home/shadowiq/Unity-2017.3.0p2/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

@@ -94,7 +94,7 @@ public class Card : MonoBehaviour {
 
         GameController controller = GameController.GetGameController();
         controller.SetBoolCheckEndOfTurn(false);
-        List<Task> tasks = cardState.getTasks();
+        List<Task> tasks = cardState.GetTasks();
         bool flag = false;
 
         int i = 0;
@@ -137,7 +137,7 @@ public class Card : MonoBehaviour {
                     while(controller.input == null){
                         yield return null;
                     }
-                    cardState.getTasks()[i].Run(controller.input);
+                    cardState.GetTasks()[i].Run(controller.input);
                     break;
                 case Task.Input.DiscardCard:
                     GameObject g = Instantiate(Resources.Load("Card_Select"), new Vector3(0,0), Quaternion.identity) as GameObject;
@@ -150,7 +150,7 @@ public class Card : MonoBehaviour {
                     while(controller.input == null){
                         yield return null;
                     }
-                    cardState.getTasks()[i].Run(controller.input);
+                    cardState.GetTasks()[i].Run(controller.input);
                     c.DestroyAll();
                     break;
 

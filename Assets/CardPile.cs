@@ -10,6 +10,8 @@ public class CardPile : MonoBehaviour {
     private Sprite rightArrow;
     private Sprite leftArrow;
 
+    public static List<CardStateBuilder> allCardBuilders;
+
     public static List<Vector3> cardPositions;
 
 
@@ -20,16 +22,40 @@ public class CardPile : MonoBehaviour {
         displayed = new List<GameObject>();
         deck = new List<CardState>();
         cardPositions = new List<Vector3>();
-        for(int i = 0; i < 49; i++){
-            List<Task> cList = new List<Task>();
-            cList.Add(new DebugTask(i));
-            CardState c = new CardState("Debug", 0, cList, "Sounds/PunchSound");
-            deck.Add(c);
-        }
-        Initiate(5);
+        // for(int i = 0; i < 49; i++){
+        //     List<Task> cList = new List<Task>();
+        //     cList.Add(new DebugTask(i));
+        //     CardState c = new CardState("Debug", 0, cList, "Sounds/PunchSound");
+        //     deck.Add(c);
+        // }
+        // Initiate(5);
 
-        
 
+
+    }
+
+    public static void AddToAll(CardStateBuilder c){
+      if(allCardBuilders == null) allCardBuilders = new List<CardStateBuilder>();
+
+      allCardBuilders.Add(c);
+    }
+
+    public static CardPile MakeCardPile(int i){
+      System.Random rand = new System.Random();
+      GameObject g = Instantiate(Resources.Load("Card_Select"), new Vector3(0,0), Quaternion.identity) as GameObject;
+      g.tag = "CardPile";
+      CardPile c = g.GetComponent<CardPile>();
+      List<CardState> cards = new List<CardState>();
+      for(int k = 0; k < i + 1; k++){
+          cards.Add(allCardBuilders[rand.Next(allCardBuilders.Count)].GetCardState(0));
+      }
+
+      c.AddList(cards);
+      int num = 5;
+      if(i < num) num = i;
+      c.Initiate(num);
+
+      return c;
     }
 
     public void AddList(List<CardState> cards){
@@ -40,7 +66,7 @@ public class CardPile : MonoBehaviour {
     public void Initiate(int numOfDisplayVar){
         int numOfDisplay = (numOfDisplayVar <= deck.Count) ? numOfDisplayVar : deck.Count;
 
-        for(int i = 0; i < numOfDisplay; i++){ 
+        for(int i = 0; i < numOfDisplay; i++){
             displayed.Add(Instantiate(Resources.Load("Card"), new Vector3(-4 + i*2, 0, 0), Quaternion.identity) as GameObject);
             cardPositions.Add(displayed[i].transform.position);
         }
@@ -71,9 +97,9 @@ public class CardPile : MonoBehaviour {
 
                 for(int i = 1; i < displayed.Count; i++) StartCoroutine(AnimateMovement(displayed[i], cardPositions[i], cardPositions[i - 1], 50));
                 for(int i = 0; i < displayed.Count - 1; i++) displayed[i] = displayed[i + 1];
-                displayed[4] = Instantiate(Resources.Load("Card"), cardPositions[4], Quaternion.identity) as GameObject;
-                displayed[4].GetComponent<Card>().AddState(deck[currentIndex + 1]);
-                
+                displayed[displayed.Count - 1] = Instantiate(Resources.Load("Card"), cardPositions[displayed.Count - 1], Quaternion.identity) as GameObject;
+                displayed[displayed.Count - 1].GetComponent<Card>().AddState(deck[currentIndex + 1]);
+
 
             } else {
                 indexFive++;
@@ -90,7 +116,7 @@ public class CardPile : MonoBehaviour {
             displayed[indexFive].GetComponent<Card>().UnHighlight();
             if(indexFive == 0){
                 //animate moving over and destroy 0th index
-                Destroy(displayed[4]);
+                Destroy(displayed[displayed.Count - 1]);
 
                 for(int i = 1; i <= displayed.Count - 1; i++) StartCoroutine(AnimateMovement(displayed[i - 1], cardPositions[i - 1], cardPositions[i], 50));
                 for(int i = displayed.Count - 1; i > 0; i--) displayed[i] = displayed[i - 1];

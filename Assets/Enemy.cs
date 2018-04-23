@@ -28,6 +28,15 @@ public class Enemy : Entity {
         gameObject.tag = "CurrentEntity";
     }
 
+    public void SetCards(List<CardState> c){
+        hand = c;
+    }
+
+    public void SetSprite(string s) {
+        gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(s);
+    }
+
+
     public void ActivateEffect(){
 
         List<GameObject> entities = GameController.GetGameController().entities;
@@ -37,7 +46,7 @@ public class Enemy : Entity {
         }
 
         CardState c = hand[r.Next(hand.Count)];
-        foreach (Task task in c.getTasks()) {
+        foreach (Task task in c.GetTasks()) {
             task.Run(players[r.Next(players.Count)]);
         }
 

@@ -16,6 +16,10 @@ public class Task {
 
     public Input type;
     public virtual void Run(GameObject input) {}
+    public virtual void Set(float f) {}
+    public virtual Task Clone(){
+        return new Task();
+    }
 }
 
 
@@ -26,6 +30,14 @@ public class Damage : Task {
     public Damage(int damage) {
         this.damage = damage;
         this.type = Input.Entity;
+    }
+
+    override public void Set(float f){
+        damage = (int) f;
+    }
+
+    override public Task Clone(){
+        return new Damage(damage);
     }
 
     override public void Run(GameObject input){

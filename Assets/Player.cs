@@ -19,7 +19,7 @@ public class Player : Entity {
     public int numOfCards = 5;
 
     public float r = 4f;
-    
+
     void Awake() {
         allCards = new List<CardState>();
 
@@ -37,18 +37,35 @@ public class Player : Entity {
             ex
         };
 
+        CardState baseCard = new CardState("example", 1, li, "Sounds/PunchSound");
+        List<float> means = new List<float>();
+        means.Add(9f);
+        means.Add(10f);
+        means.Add(11f);
+        List<float> stdDev = new List<float>();
+        stdDev.Add(2.5f);
+        stdDev.Add(3.75f);
+        stdDev.Add(1f);
+        TaskBuilder strike = new TaskBuilder(new Damage(0), means, stdDev);
+        List<TaskBuilder> tasks = new List<TaskBuilder>();
+        tasks.Add(strike);
+        CardStateBuilder stateBuilder = new CardStateBuilder(new StrikeState(), tasks);
+
+        //CardPile.Add(stateBuilder);
+
+
         for (int i = 0; i < 50; i++){
-            deck.Add(new CardState("example", 1, li, "Sounds/PunchSound"));
+            deck.Add(stateBuilder.GetCardState(1));
         }
     }
 
-    
+
     override public void BeginTurn() {
         numOfCards = cardsPerTurn;
         currentEnergy = energyPerTurn;
         for(int i = 0; i < numOfCards; i++) {
-          hand.Add(Instantiate(Resources.Load("Card"), new Vector2((float) (r*Math.Sin((Math.PI/180)*i*90/(numOfCards - 1) - (Math.PI/180)*45)), 
-          (float) (-6f + r*Math.Cos((Math.PI/180)*i*90/(numOfCards - 1) - (Math.PI/180)*45))), Quaternion.identity) as GameObject);
+          hand.Add(Instantiate(Resources.Load("Card"), new Vector2((float) (r*Math.Sin((Math.PI/180)*i*120/(numOfCards - 1) - (Math.PI/180)*60)),
+          (float) (-6f + r*Math.Cos((Math.PI/180)*i*120/(numOfCards - 1) - (Math.PI/180)*60))), Quaternion.identity) as GameObject);
 		  hand[i].GetComponent<Card>().SetState(deck[0]);
           deck.Remove(deck[0]);
 		  Debug.Log("Made Card: " + i);
@@ -58,23 +75,33 @@ public class Player : Entity {
 
     public void OrganizeCards(){
         numOfCards = hand.Count;
-        for(int i = 0; i < numOfCards; i++){
-         //   hand[i].transform.position = new Vector3((float) (r*Math.Sin((Math.PI/180)*i*(numOfCards*14))/(numOfCards - 1) - (Math.PI/180)*45),
-       //     (float) (-6f + r*Math.Cos((Math.PI/180)*i*(numOfCadrs*14))/(numOfCards - 1) - (Math.PI/180)*45)), 0;
-        //     hand[i].transform.position = new Vector3((float) (r*Math.Sin((Math.PI/180)*i*(numOfCards*14))/(numOfCards - 1) - (Math.PI/180)*45)),
-        //   (float) (-6f + r*Math.Cos((Math.PI/180)*i*(numOfCadrs*14))/(numOfCards - 1) - (Math.PI/180)*45)), 0);
+        float freedom = numOfCards*90f/5f;
+        Debug.Log("FREEDOM:" + freedom + "");
+        float bound = (180f - freedom)/2;
+        if(numOfCards > 1){
+            for(int i = 0; i < numOfCards; i++) {
+                hand[i].transform.position = new Vector3((float) (r*Math.Cos((Math.PI/180)*(numOfCards - 1 - i)*freedom/(numOfCards - 1) + (Math.PI/180)*bound)),
+                (float) (-6f + r*Math.Sin((Math.PI/180)*(numOfCards - 1 - i)*freedom/(numOfCards - 1) + (Math.PI/180)*bound)),0);
+           }
+        } else if(numOfCards == 1) {
+            hand[0].transform.position = new Vector3(0, -1 ,0);
         }
-        //r =  4 - (4 - numOfCards)*.35f;
     }
 
 
+    public void AddCardState(CardState c){
+        deck.Add(c);
+    }
+
     override public void EndTurn() {
-        for(int i = 0; i < hand.Count; i++){
-            discard.Add(hand[i].GetComponent<Card>().GetState());
-            Destroy(hand[i]);
-            hand.Remove(hand[i]);
+        int size = hand.Count;
+        while(hand.Count != 0){
+            discard.Add(hand[0].GetComponent<Card>().GetState());
+            //Destroy(hand[i]);
+            Destroy(hand[0]);
+            hand.Remove(hand[0]);
         }
-        gameObject.tag = "Player";
+        //gameObject.tag = "Player";
     }
 
     public void ActivateCard(int i) {

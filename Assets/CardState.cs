@@ -9,17 +9,35 @@ public class CardState {
     private string name;
     private int cost;
     private List<Task> tasks;
+    private string audioPath;
     public AudioClip soundEffect;
 
     public CardState(string name, int cost, List<Task> tasks, string audioPath){
         this.name = name;
         this.cost = cost;
         this.tasks = tasks;
+        this.audioPath = audioPath;
         soundEffect = Resources.Load<AudioClip>(audioPath);
     }
 
-    public List<Task> getTasks() {
+    public List<Task> GetTasks() {
         return tasks;
+    }
+
+    public CardState Clone(){
+        return new CardState(this.name, this.cost, this.tasks, this.audioPath);
+    }
+
+    public void RemoveAllTasks(){
+        tasks.Clear();
+    }
+
+    public void AddTask(Task t){
+        tasks.Add(t);
+    }
+
+    public void SetTasks(List<Task> t){
+        tasks = t;
     }
 
     public int GetCost() {
